@@ -98,13 +98,11 @@
   background-image: none !important;
 }
 
-.tabbrowser-tab[selected="true"],
-.tabbrowser-tab[multiselect="true"] {
+.tabbrowser-tab[selected="true"] {
     background: #222 !important;
 
 }
-.tabbrowser-tab[selected="true"]:-moz-window-inactive,
-.tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
     background: #222 !important;
 }
 
@@ -136,14 +134,12 @@
 .tab-close-button:active {
     opacity: 0.46;  /* turn black into #8a8a8a */
 }
-.tabbrowser-tab[selected="true"] .tab-close-button,
-.tabbrowser-tab[multiselect="true"] .tab-close-button {
+.tabbrowser-tab[selected="true"] .tab-close-button {
     background-image: url("resource://verticaltabs/skin/osx/closetab-white.svg");
     opacity: 0.8;
 }
 
-.tabbrowser-tab[selected="true"] .tab-close-button:hover,
-.tabbrowser-tab[multiselect="true"] .tab-close-button:hover {
+.tabbrowser-tab[selected="true"] .tab-close-button:hover {
     opacity: 1;
 }
 
@@ -194,8 +190,7 @@
     margin-bottom: 1px;
     text-align: left !important;
 }
-.tabbrowser-tab[selected="true"] .tab-text,
-.tabbrowser-tab[multiselect="true"] .tab-text {
+.tabbrowser-tab[selected="true"] .tab-text {
     font-weight: bold !important;
     color: #DDD !important;
     text-shadow: 0 1px #404040 !important;
@@ -217,13 +212,6 @@
     background-color: #4C9ED9;
 }
 
-#verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 280px, 20px, 260px);
-}
-
-
 
 /* Personas */
 
@@ -234,32 +222,6 @@
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-middle:-moz-lwtheme-darktext:not([selected="true"]),
 .tabbrowser-tab > .tab-stack > .tab-background > .tab-background-end:-moz-lwtheme-darktext:not([selected="true"]) {
     background-image: none !important;
-}
-
-
-/*** Group related styles ***/
-
-.tabbrowser-tab[verticaltabs-ingroup] {
-    padding-left: 20px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] {
-    padding-top: 1px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-close-button {
-    opacity: 1 !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-text {
-    color: #738192 !important;
-    font-weight: bold !important;
-    text-transform: uppercase !important;
-    text-shadow: 0 1px #ffffff !important;
-}
-.tabbrowser-tab[selected="true"][verticaltabs-group] .tab-text {
-    color: #ffffff !important;
-    text-shadow: 0 1px #404040 !important;
 }
 
 .verticaltabs-textbox {
@@ -300,16 +262,6 @@
     background: #d0def5 !important;
     -moz-border-radius: 8px !important;
     /* TODO avoid increasing the overall height */
-}
-
-.verticaltabs-dropingroup {
-    margin-left: 10px !important;
-}
-
-.verticaltabs-droptonewgroup {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 280px, 20px, 260px);
 }
 
 .verticaltabs-twisty {

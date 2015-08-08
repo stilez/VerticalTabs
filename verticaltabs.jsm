@@ -36,9 +36,6 @@
  * ***** END LICENSE BLOCK ***** */
 
 Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import("resource://verticaltabs/tabdatastore.jsm");
-Components.utils.import("resource://verticaltabs/multiselect.jsm");
-Components.utils.import("resource://verticaltabs/groups.jsm");
 
 let console = (Components.utils.import("resource://gre/modules/devtools/Console.jsm", {})).console;
 
@@ -58,8 +55,8 @@ function VerticalTabs(window) {
     this.unloaders = [];
     this.init();
 }
-VerticalTabs.prototype = {
 
+VerticalTabs.prototype = {
     init: function() {
         this.window.VerticalTabs = this;
         this.unloaders.push(function() {
@@ -67,26 +64,18 @@ VerticalTabs.prototype = {
         });
 
         this.sss = Components.classes["@mozilla.org/content/style-sheet-service;1"]
-                    .getService(Components.interfaces.nsIStyleSheetService);
+                   .getService(Components.interfaces.nsIStyleSheetService);
         this.ios = Components.classes["@mozilla.org/network/io-service;1"]
-                    .getService(Components.interfaces.nsIIOService);
+                   .getService(Components.interfaces.nsIIOService);
 
         this.installStylesheet("resource://verticaltabs/override-bindings.css");
-        this.installStylesheet("resource://verticaltabs/skin/bindings.css");
         this.installStylesheet("resource://verticaltabs/skin/base.css");
         this.applyThemeStylesheet();
         this.unloaders.push(this.removeThemeStylesheet);
 
         this.rearrangeXUL();
-        this.initContextMenu();
         this.observeRightPref();
         this.observeThemePref();
-
-        let tabs = this.document.getElementById("tabbrowser-tabs");
-        this.tabIDs = new VTTabIDs(tabs);
-        this.unloaders.push(function() {
-            this.tabIDs.unload();
-        });
     },
 
     installStylesheet: function(uri) {
@@ -95,40 +84,44 @@ VerticalTabs.prototype = {
     },
 
     applyThemeStylesheet: function() {
-      this.theme = Services.prefs.getCharPref("extensions.verticaltabs.theme");
-      this.installStylesheet(this.getThemeStylesheet(this.theme));
+        this.theme = Services.prefs.getCharPref("extensions.verticaltabs.theme");
+        this.installStylesheet(this.getThemeStylesheet(this.theme));
     },
 
     removeThemeStylesheet: function() {
-      var uri = this.ios.newURI(this.getThemeStylesheet(this.theme), null, null);
-      this.sss.unregisterSheet(uri, this.sss.USER_SHEET);
+        var uri = this.ios.newURI(this.getThemeStylesheet(this.theme), null, null);
+        this.sss.unregisterSheet(uri, this.sss.USER_SHEET);
     },
 
     getThemeStylesheet: function(theme) {
-      var stylesheet;
-      switch (theme) {
+        var stylesheet;
+        switch (theme) {
         case "default":
             switch(Services.appinfo.OS) {
-              case "WINNT":
+            case "WINNT":
                 stylesheet = "resource://verticaltabs/skin/win7/win7.css";
                 break;
-              case "Darwin":
+                
+            case "Darwin":
                 stylesheet = "resource://verticaltabs/skin/osx/osx.css";
                 break;
-              case "Linux":
+                
+            case "Linux":
                 stylesheet = "resource://verticaltabs/skin/linux/linux.css";
                 break;
             }
-          break;
+            break;
+            
         case "dark":
-          stylesheet = "resource://verticaltabs/skin/dark/dark.css";
-          break;
+            stylesheet = "resource://verticaltabs/skin/dark/dark.css";
+            break;
+            
         case "light":
-          stylesheet = "resource://verticaltabs/skin/light/light.css";
-          break;
-      }
+            stylesheet = "resource://verticaltabs/skin/light/light.css";
+            break;
+        }
 
-      return stylesheet;
+        return stylesheet;
     },
 
     rearrangeXUL: function() {
@@ -177,10 +170,12 @@ VerticalTabs.prototype = {
         toolbar._toolbox = null; // reset value set by constructor
         toolbar.setAttribute("toolboxid", "navigator-toolbox");
         leftbox.appendChild(toolbar);
-
+        
         // Not sure what this does, it and all related code might be unnecessary
+        /*
         window.TabsOnTop = window.TabsOnTop ? window.TabsOnTop : {};
         window.TabsOnTop.enabled = false;
+        */
 
         let toolbar_context_menu = document.getElementById("toolbar-context-menu");
         toolbar_context_menu.firstChild.collapsed = true;
@@ -218,8 +213,10 @@ VerticalTabs.prototype = {
             tabs.removeEventListener("TabOpen", this, false);
 
             // Restore tabs on top.
+            /*
             window.TabsOnTop.enabled = Services.prefs.getBoolPref(
                 "extensions.verticaltabs.tabsOnTop");
+            */
             toolbar_context_menu.firstChild.collapsed = false;
             toolbar_context_menu.firstChild.nextSibling.collapsed = false; // separator
 
@@ -236,30 +233,6 @@ VerticalTabs.prototype = {
             browserbox.removeChild(splitter);
             browserbox.dir = "normal";
             leftbox = splitter = null;
-        });
-    },
-
-    initContextMenu: function() {
-        const document = this.document;
-        const tabs = document.getElementById("tabbrowser-tabs");
-
-        let closeMultiple = null;
-        if (this.multiSelect) {
-            closeMultiple = document.createElementNS(NS_XUL, "menuitem");
-            closeMultiple.id = "context_verticalTabsCloseMultiple";
-            closeMultiple.setAttribute("label", "Close Selected Tabs"); //TODO l10n
-            closeMultiple.setAttribute("tbattr", "tabbrowser-multiple");
-            closeMultiple.setAttribute(
-                "oncommand", "gBrowser.tabContainer.VTMultiSelect.closeSelected();");
-            tabs.contextMenu.appendChild(closeMultiple);
-        }
-
-        tabs.contextMenu.addEventListener("popupshowing", this, false);
-
-        this.unloaders.push(function () {
-            if (closeMultiple)
-                tabs.contextMenu.removeChild(closeMultiple);
-            tabs.contextMenu.removeEventListener("popupshowing", this, false);
         });
     },
 
@@ -296,92 +269,70 @@ VerticalTabs.prototype = {
     },
 
     observeRightPref: function () {
-      Services.prefs.addObserver("extensions.verticaltabs.right", this, false);
-      this.unloaders.push(function () {
-        Services.prefs.removeObserver("extensions.verticaltabs.right", this, false);
-      });
+        Services.prefs.addObserver("extensions.verticaltabs.right", this, false);
+        this.unloaders.push(function () {
+            Services.prefs.removeObserver("extensions.verticaltabs.right", this, false);
+        });
     },
 
     observeThemePref: function() {
-      Services.prefs.addObserver("extensions.verticaltabs.theme", this, false);
-      this.unloaders.push(function() {
-        Services.prefs.removeObserver("extensions.verticaltabs.theme", this, false);
-      });
+        Services.prefs.addObserver("extensions.verticaltabs.theme", this, false);
+        this.unloaders.push(function() {
+            Services.prefs.removeObserver("extensions.verticaltabs.theme", this, false);
+        });
     },
 
     observe: function (subject, topic, data) {
-      if (topic != "nsPref:changed") {
-        return;
-      }
+        if (topic != "nsPref:changed") {
+            return;
+        }
 
-      switch (data) {
+        switch (data) {
         case "extensions.verticaltabs.right":
-          let browserbox = this.document.getElementById("browser");
-          if (browserbox.dir != "reverse") {
-            browserbox.dir = "reverse";
-          } else {
-            browserbox.dir = "normal";
-          }
-          break;
+            let browserbox = this.document.getElementById("browser");
+            if (browserbox.dir != "reverse") {
+                browserbox.dir = "reverse";
+            } else {
+                browserbox.dir = "normal";
+            }
+            break;
+          
         case "extensions.verticaltabs.theme":
-          console.log("updating theme");
-          this.removeThemeStylesheet();
-          this.applyThemeStylesheet();
-          break;
-      }
-
+            console.log("updating theme");
+            this.removeThemeStylesheet();
+            this.applyThemeStylesheet();
+            break;
+        }
     },
 
     unload: function() {
-      this.unloaders.forEach(function(func) {
-        func.call(this);
-      }, this);
+        this.unloaders.forEach(function(func) {
+            func.call(this);
+        }, this);
     },
 
     /*** Event handlers ***/
 
     handleEvent: function(aEvent) {
         switch (aEvent.type) {
+        case "TabOpen":
+            this.initTab(aEvent.target);
+            this.setPinnedSizes();
+            return;
+            
+        case "mouseup":
+            if (aEvent.target.getAttribute("id") == "verticaltabs-splitter") {
+                this.onTabbarResized();
+            }
+            return;
+            
         case "DOMContentLoaded":
             this.init();
             return;
-        case "TabOpen":
-            this.onTabOpen(aEvent);
-            this.setPinnedSizes();
-            return;
-        case "mouseup":
-            this.onMouseUp(aEvent);
-            return;
-        case "popupshowing":
-            this.onPopupShowing(aEvent);
-            return;
+            
         case "resize":
             this.setPinnedSizes();
             return;
         }
     },
-
-    onTabOpen: function(aEvent) {
-        this.initTab(aEvent.target);
-    },
-
-    onMouseUp: function(aEvent) {
-        if (aEvent.target.getAttribute("id") == "verticaltabs-splitter") {
-            this.onTabbarResized();
-        }
-    },
-
-    onPopupShowing: function(aEvent) {
-        if (!this.multiSelect)
-            return;
-
-        let closeTabs = this.document.getElementById("context_verticalTabsCloseMultiple");
-        let tabs = this.multiSelect.getSelected();
-        if (tabs.length > 1) {
-            closeTabs.disabled = false;
-        } else {
-            closeTabs.disabled = true;
-        }
-    }
-
 };

@@ -29,8 +29,7 @@
     border-left: 4px solid transparent !important;
 }
 
-.tabbrowser-tab[selected="true"],
-.tabbrowser-tab[multiselect="true"] {
+.tabbrowser-tab[selected="true"] {
     margin: 0 !important;
     padding: 1px 0 !important;
     background-color: #343F48 !important;
@@ -40,8 +39,7 @@
     border-radius: 0 !important;
     font-weight: 600 !important;
 }
-.tabbrowser-tab[selected="true"]:-moz-window-inactive,
-.tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
     background-color: InactiveCaption !important;
     color: InactiveCaptionText !important;
    /* gnome/gtk/cleartype doesn't seem to have inactive states for selected items, lets try this */
@@ -105,34 +103,6 @@
     background-image: none !important;
 }
 
-
-/* Tab toolbar styling */
-
-#verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
-}
-
-
-/*** Group related styles ***/
-
-.tabbrowser-tab[verticaltabs-ingroup],
-.tabbrowser-tab[verticaltabs-ingroup]:hover {
-    padding-left: 16px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] {
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-close-button {
-    opacity: 1 !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-text {
-    padding-left: 3px !important;
-}
-
 .verticaltabs-textbox {
     margin: 0;
 }
@@ -144,16 +114,6 @@
 .verticaltabs-droptarget {
     background-color: Highlight !important;
     color: HighlightText !important;
-}
-
-.verticaltabs-dropingroup {
-    margin-left: 10px !important;
-}
-
-.verticaltabs-droptonewgroup {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
 }
 
 .verticaltabs-twisty {

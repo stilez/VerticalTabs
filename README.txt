@@ -9,9 +9,6 @@ Download & Install: http://people.mozilla.org/~rcampbell/VerticalTabs.xpi
 
 Goals:
 
-* Ability to arrange tabs in groups (instead of arbitrary trees) plus
-  some group-related features (collapse group, tab previews, etc.)
-
 * Very few other features and hopefully little or no preference settings.
   Instead a good JavaScript API might be provided for other extensions
   (e.g. JetPack SDK based) to provide additional features.

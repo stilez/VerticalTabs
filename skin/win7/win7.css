@@ -57,8 +57,7 @@
     background: -moz-linear-gradient(left, gray, #ebf3fd) repeat-y !important;
 }
 
-.tabbrowser-tab[selected="true"],
-.tabbrowser-tab[multiselect="true"] {
+.tabbrowser-tab[selected="true"] {
     /*margin: 0 !important;*/
     /*padding: 0 0 0 3px !important;*/
 
@@ -68,8 +67,7 @@
     font-weight: normal;
     text-shadow: none;
 }
-.tabbrowser-tab[selected="true"]:-moz-window-inactive,
-.tabbrowser-tab[multiselect="true"]:-moz-window-inactive {
+.tabbrowser-tab[selected="true"]:-moz-window-inactive {
     border: 1px solid !important;
     -moz-border-top-colors: #d9d9d9 #fafafb !important;
     -moz-border-bottom-colors: #d9d9d9 #f0f0f0 !important;
@@ -143,13 +141,6 @@ margin-bottom: 23px !important;
     border-bottom-left-radius: 4px !important;
 }
 
-#verticaltabs-groupbutton {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
-}
-
-
 /* Ensure that content area has a top border */
 #navigator-toolbox::after {
     visibility: visible !important;
@@ -177,24 +168,6 @@ margin-bottom: 23px !important;
     border-bottom-right-radius: 4px !important;
 }
 
-
-/*** Group related styles ***/
-
-.tabbrowser-tab[verticaltabs-ingroup],
-.tabbrowser-tab[verticaltabs-ingroup]:hover {
-    padding-left: 16px !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] {
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-close-button {
-    opacity: 1 !important;
-}
-
-.tabbrowser-tab[verticaltabs-group] .tab-text {
-}
-
 .verticaltabs-textbox {
     margin: 0;
 }
@@ -210,16 +183,6 @@ margin-bottom: 23px !important;
     -moz-border-left-colors: #84acdd #e8f2fe !important;
     -moz-border-right-colors: #84acdd #e8f2fe !important;
     background: -moz-linear-gradient(top, #ebf4fe, #cfe4fe) repeat-x !important;
-}
-
-.verticaltabs-dropingroup {
-    margin-left: 10px !important;
-}
-
-.verticaltabs-droptonewgroup {
-    /* TODO need icon to symbolize tab group */
-    list-style-image: url("chrome://browser/skin/Toolbar.png");
-    -moz-image-region: rect(0, 234px, 18px, 216px);
 }
 
 .verticaltabs-twisty {
