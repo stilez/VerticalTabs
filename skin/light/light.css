@@ -16,8 +16,6 @@
 .tabbrowser-tab {
     -moz-box-pack: start;
     -moz-box-flex: 0;
-    -moz-appearance: none !important;
-    background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
     margin: 0 !important;
